@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Time Suhu Pameungpeuk Garut</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .dark {
@@ -18,7 +17,7 @@
 
     <div class="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
         <header class="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
-            <h2 class="font-semibold text-gray-800 dark:text-gray-100">Suhu Pameungpeuk Garut</h2>
+            <h2 class="font-semibold text-gray-800 dark:text-gray-100">Suhu Pameungpeuk Garut (Versi Sensor)</h2>
             <div class="relative ml-2" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                 <button class="block" aria-haspopup="true" :aria-expanded="open" @focus="open = true" @focusout="open = false" @click.prevent>
                     <svg class="fill-current text-gray-400 dark:text-gray-500" width="16" height="16" viewBox="0 0 16 16">
@@ -39,35 +38,49 @@
             </div>
         </div>
         <div class="grow">
-            <canvas id="temperature-chart" width="595" height="248"></canvas>
+            <canvas id="temperature-sensor" width="595" height="248"></canvas>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const apiKey = 'dff875fb10cfae1af293b659110fff2e'; // API key Anda
-            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?id=1632972&units=metric&appid=${apiKey}`;
+            const apiUrl = '/get-latest-temperature'; // Mengambil data dari route Laravel
+
+            // Variabel untuk menyimpan ID terakhir yang diambil
+            let lastId = null;
 
             function fetchRealTimeTemperature() {
                 fetch(apiUrl)
                     .then(response => response.json())
                     .then(data => {
-                        const temperature = data.main.temp;
-                        document.getElementById('temperature-value').textContent = temperature.toFixed(1);
-                        // Update deviation if needed
-                        // document.getElementById('temperature-deviation').textContent = data.deviation;
+                        if (data.id !== lastId) { // Hanya perbarui jika ID baru
+                            lastId = data.id;
+                            const temperature = data.suhu;
+                            const currentTime = new Date().toLocaleTimeString();
+
+                            document.getElementById('temperature-value').textContent = parseFloat(temperature).toFixed(1);
+
+                            // Tambahkan data baru ke chart
+                            chart.data.labels.push(currentTime);
+                            chart.data.datasets[0].data.push(temperature);
+
+                            // Mempertahankan jumlah data pada chart tidak lebih dari 5
+                            if (chart.data.labels.length > 5) {
+                                chart.data.labels.shift();
+                                chart.data.datasets[0].data.shift();
+                            }
+
+                            chart.update("none");
+                        }
                     })
                     .catch(error => console.error('Error fetching real-time temperature:', error));
             }
 
-            // Initialize temperature fetch
-            fetchRealTimeTemperature();
-
-            // Fetch temperature every 1 seconds
+            // Fetch temperature every 2 seconds
             setInterval(fetchRealTimeTemperature, 2000);
 
             // Chart.js configuration
-            const ctx = document.getElementById('temperature-chart').getContext('2d');
+            const ctx = document.getElementById('temperature-sensor').getContext('2d');
             const chart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -103,34 +116,9 @@
                     }
                 }
             });
-
-            // Function to update chart data
-            function updateChartData() {
-                fetch(apiUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        const temperature = data.main.temp;
-                        const currentTime = new Date().toLocaleTimeString();
-
-                        // Add new data to chart
-                        chart.data.labels.push(currentTime);
-                        chart.data.datasets[0].data.push(temperature);
-
-                        // Maintain chart data range of 5
-                        if (chart.data.labels.length > 5) {
-                            chart.data.labels.shift();
-                            chart.data.datasets[0].data.shift();
-                        }
-
-                        chart.update("none");
-                    })
-                    .catch(error => console.error('Error updating chart data:', error));
-            }
-
-            // Update chart data every 1 seconds
-            setInterval(updateChartData, 1000);
         });
     </script>
+
 
 </body>
 

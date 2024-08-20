@@ -42,13 +42,13 @@
             <x-analytics.analytics-card-03 :dataFeed="$dataFeed" />
 
             <!-- Bar chart (Direct vs Indirect) -->
-            <!-- <x-analytics.analytics-card-04 /> -->
+            <x-analytics.analytics-card-04 />
 
             <!-- Suhu chart (Top Countries) -->
-            <x-analytics.analytics-card-06 />
+            <x-analytics.analytics-card-05 />
 
             <!-- Kelembapan chart (Real Time Value) -->
-            <x-analytics.analytics-card-05 />
+            <x-analytics.analytics-card-06 />
 
             <!-- Table (Top Channels) -->
             <x-analytics.analytics-card-07 />
