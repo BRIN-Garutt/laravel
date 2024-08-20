@@ -1,0 +1,49 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+
+/* Additional styles */
+@import "additional-styles/utility-patterns.css";
+@import "additional-styles/flatpickr.css";
+
+@import "tailwindcss/utilities";
+
+/* Custom styles */
+.bg-gradient-blue {
+    background: rgb(0, 177, 255);
+    background: -moz-linear-gradient(
+        90deg,
+        rgba(0, 177, 255, 1) 0%,
+        rgba(255, 255, 255, 1) 91%
+    );
+    background: -webkit-linear-gradient(
+        90deg,
+        rgba(0, 177, 255, 1) 0%,
+        rgba(255, 255, 255, 1) 91%
+    );
+    background: linear-gradient(
+        90deg,
+        rgba(0, 177, 255, 1) 0%,
+        rgba(255, 255, 255, 1) 91%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00b1ff",endColorstr="#ffffff",GradientType=1);
+}
+
+.bg-gradient-custom {
+    background: rgb(224, 0, 0);
+    background: -moz-linear-gradient(
+        90deg,
+        rgba(224, 0, 0, 1) 50%,
+        rgba(227, 227, 224, 1) 50%
+    );
+    background: -webkit-linear-gradient(
+        90deg,
+        rgba(224, 0, 0, 1) 50%,
+        rgba(227, 227, 224, 1) 50%
+    );
+    background: linear-gradient(
+        90deg,
+        rgba(224, 0, 0, 1) 50%,
+        rgba(227, 227, 224, 1) 50%
+    );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e00000",endColorstr="#e3e3e0",GradientType=1);
+}
