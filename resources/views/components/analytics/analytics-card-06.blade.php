@@ -64,12 +64,6 @@
                             chart.data.labels.push(currentTime);
                             chart.data.datasets[0].data.push(temperature);
 
-                            // Mempertahankan jumlah data pada chart tidak lebih dari 5
-                            if (chart.data.labels.length > 5) {
-                                chart.data.labels.shift();
-                                chart.data.datasets[0].data.shift();
-                            }
-
                             chart.update("none");
                         }
                     })
@@ -118,6 +112,7 @@
             });
         });
     </script>
+
 
 
 </body>
