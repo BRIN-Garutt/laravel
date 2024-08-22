@@ -22,7 +22,6 @@ import dashboardCard09 from "./components/dashboard-card-09";
 import dashboardCard11 from "./components/dashboard-card-11";
 
 // import component analytics from './components/component';
-import analyticsCard04 from "./components/analytics/analytics-card-04";
 
 
 // Define Chart.js default settings
