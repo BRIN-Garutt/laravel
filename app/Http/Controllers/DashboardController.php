@@ -33,8 +33,12 @@ class DashboardController extends Controller
         $suhuData = $logs->pluck('suhu');
         $kelembapanData = $logs->pluck('kelembapan');
 
+        // Hitung rata-rata suhu dan kelembapan
+        $averageSuhu = $logs->avg('suhu');
+        $averageKelembapan = $logs->avg('kelembapan');
+
         // Kirim variabel ke view
-        return view('pages.dashboard.analytics', compact('logs', 'tanggal', 'hari', 'labels', 'suhuData', 'kelembapanData'));
+        return view('pages.dashboard.analytics', compact('logs', 'tanggal', 'hari', 'labels', 'suhuData', 'kelembapanData', 'averageSuhu', 'averageKelembapan'));
     }
 
     public function getRealtimeData()
@@ -60,6 +64,47 @@ class DashboardController extends Controller
             'kelembapanData' => $kelembapanData,
         ]);
     }
+
+    public function filterAnalytics(Request $request)
+    {
+        // Ambil nilai dari input filter
+        $tanggal = $request->input('tanggal');
+        $hari = $request->input('hari');
+        $waktu = $request->input('waktu');
+
+        // Query data berdasarkan filter yang dipilih
+        $query = Log::query();
+
+        if ($tanggal) {
+            $query->whereDate('tanggal', $tanggal);
+        }
+
+        if ($hari) {
+            $query->where('hari', $hari);
+        }
+
+        if ($waktu) {
+            $query->whereTime('waktu', $waktu);
+        }
+
+        $logs = $query->get();
+
+        // Hitung rata-rata suhu dan kelembapan per hari
+        $averageSuhu = $logs->avg('suhu');
+        $averageKelembapan = $logs->avg('kelembapan');
+
+        return view('pages.dashboard.analytics', [
+            'logs' => $logs,
+            'tanggal' => $logs->pluck('tanggal'),
+            'hari' => $logs->pluck('hari'),
+            'labels' => $logs->pluck('waktu'),
+            'suhuData' => $logs->pluck('suhu'),
+            'kelembapanData' => $logs->pluck('kelembapan'),
+            'averageSuhu' => $averageSuhu,
+            'averageKelembapan' => $averageKelembapan,
+        ]);
+    }
+
 
     /**
      * Displays the fintech screen

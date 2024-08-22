@@ -24,35 +24,75 @@
         <div id="title">MONITORING SUHU DAN KELEMBAPAN</div>
         <div id="subtitle">Badan Riset dan Inovasi Garut</div>
 
+        <!-- Filters Section -->
+        <div class="mb-4">
+            <form method="GET" action="{{ route('filterAnalytics') }}">
+                <div class="flex items-center space-x-4">
+                    <div>
+                        <label for="tanggal" class="block text-sm font-medium text-gray-700">Tanggal</label>
+                        <input type="date" id="tanggal" name="tanggal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    </div>
+                    <div>
+                        <label for="hari" class="block text-sm font-medium text-gray-700">Hari</label>
+                        <select id="hari" name="hari" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                            <option value="">Semua</option>
+                            <option value="Senin">Senin</option>
+                            <option value="Selasa">Selasa</option>
+                            <option value="Rabu">Rabu</option>
+                            <option value="Kamis">Kamis</option>
+                            <option value="Jumat">Jumat</option>
+                            <option value="Sabtu">Sabtu</option>
+                            <option value="Minggu">Minggu</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="waktu" class="block text-sm font-medium text-gray-700">Waktu</label>
+                        <input type="time" id="waktu" name="waktu" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    </div>
+                    <div>
+                        <label for="submit" class="block text-sm font-medium text-gray-700">Filter</label>
+                        <button type="submit" class="btn bg-blue-500 text-white">Terapkan</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Table Section -->
         <div class="scrollable-table">
-            <table id="c4ytable" align="center">
-                <thead>
+            <table id="c4ytable" align="center" class="min-w-full bg-white border border-gray-300">
+                <thead class="bg-gray-50">
                     <tr>
-                        <th width="36"><strong>NO</strong></th>
-                        <th width="90"><strong>TANGGAL</strong></th>
-                        <th width="90"><strong>HARI</strong></th>
-                        <th width="75"><strong>WAKTU</strong></th>
-                        <th width="130"><strong>SUHU</strong></th>
-                        <th width="200"><strong>KELEMBAPAN</strong></th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NO</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TANGGAL</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">HARI</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">WAKTU</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SUHU</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">KELEMBAPAN</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($logs as $index => $log)
                     <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $log->tanggal }}</td>
-                        <td>{{ $log->hari }}</td>
-                        <td>{{ $log->waktu }}</td>
-                        <td>{{ $log->suhu }}</td>
-                        <td>{{ $log->kelembapan }}</td>
+                        <td class="py-2 px-4 border-b">{{ $index + 1 }}</td>
+                        <td class="py-2 px-4 border-b">{{ $log->tanggal }}</td>
+                        <td class="py-2 px-4 border-b">{{ $log->hari }}</td>
+                        <td class="py-2 px-4 border-b">{{ $log->waktu }}</td>
+                        <td class="py-2 px-4 border-b">{{ $log->suhu }} °C</td>
+                        <td class="py-2 px-4 border-b">{{ $log->kelembapan }} %</td>
                     </tr>
                     @endforeach
+                    <!-- Display average per day if needed -->
+                    <tr class="bg-gray-100">
+                        <td colspan="4" class="py-2 px-4 border-b text-right font-semibold">Rata-rata per Hari</td>
+                        <td class="py-2 px-4 border-b">{{ $averageSuhu }} °C</td>
+                        <td class="py-2 px-4 border-b">{{ $averageKelembapan }} %</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- Charts -->
-        <div id="charts" class="flex justify-between">
+        <!-- Charts Section -->
+        <div id="charts" class="flex justify-between mt-6">
             <div class="chartContainer w-1/2 p-2">
                 <canvas id="suhuChart"></canvas>
             </div>
@@ -151,11 +191,21 @@
                             suhu.innerHTML = data.suhuData[index];
                             kelembapan.innerHTML = data.kelembapanData[index];
                         });
+
+                        // Display average per day
+                        var avgRow = tbody.insertRow();
+                        avgRow.classList.add('bg-gray-100');
+                        avgRow.insertCell(0).setAttribute('colspan', '4');
+                        avgRow.cells[0].innerText = 'Rata-rata per Hari';
+                        avgRow.cells[0].classList.add('text-right', 'font-semibold', 'py-2', 'px-4', 'border-b');
+                        avgRow.insertCell(1).innerText = data.averageSuhu + ' °C';
+                        avgRow.cells[1].classList.add('py-2', 'px-4', 'border-b');
+                        avgRow.insertCell(2).innerText = data.averageKelembapan + ' %';
+                        avgRow.cells[2].classList.add('py-2', 'px-4', 'border-b');
                     });
             }
 
-            // Polling setiap 5 detik
-            setInterval(updateCharts, 5000);
+            setInterval(updateCharts, 2000);
         </script>
 
     </div>
