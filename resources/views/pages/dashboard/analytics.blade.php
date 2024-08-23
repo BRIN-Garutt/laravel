@@ -171,7 +171,7 @@
                         kelembapanChart.data.datasets[0].data = data.kelembapanData;
                         kelembapanChart.update();
 
-                        // Update tabel data
+                        // Update table data
                         var table = document.getElementById('c4ytable');
                         var tbody = table.getElementsByTagName('tbody')[0];
                         tbody.innerHTML = '';
@@ -188,8 +188,8 @@
                             tanggal.innerHTML = data.tanggal[index];
                             hari.innerHTML = data.hari[index];
                             waktu.innerHTML = label;
-                            suhu.innerHTML = data.suhuData[index];
-                            kelembapan.innerHTML = data.kelembapanData[index];
+                            suhu.innerHTML = data.suhuData[index] + ' °C';
+                            kelembapan.innerHTML = data.kelembapanData[index] + ' %';
                         });
 
                         // Display average per day
@@ -205,8 +205,10 @@
                     });
             }
 
-            setInterval(updateCharts, 2000);
+            // Memanggil updateCharts() setiap 5 detik
+            setInterval(updateCharts, 5000);
         </script>
+
 
     </div>
 </x-app-layout>

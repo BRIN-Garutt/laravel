@@ -43,9 +43,6 @@ class DashboardController extends Controller
 
     public function getRealtimeData()
     {
-        // Ambil data terbaru dari tabel logs
-        // $logs = Log::latest()->take(5)->get();
-        //memastikan data yang ditampilkan itu ascending
         $logs = DB::table('logs')->orderBy('id', 'asc')->get();
 
         // Siapkan data untuk chart
@@ -55,6 +52,10 @@ class DashboardController extends Controller
         $suhuData = $logs->pluck('suhu');
         $kelembapanData = $logs->pluck('kelembapan');
 
+        // Hitung rata-rata suhu dan kelembapan
+        $averageSuhu = $logs->avg('suhu');
+        $averageKelembapan = $logs->avg('kelembapan');
+
         // Kembalikan data dalam bentuk JSON
         return response()->json([
             'tanggal' => $tanggal,
@@ -62,8 +63,11 @@ class DashboardController extends Controller
             'labels' => $labels,
             'suhuData' => $suhuData,
             'kelembapanData' => $kelembapanData,
+            'averageSuhu' => $averageSuhu,
+            'averageKelembapan' => $averageKelembapan,
         ]);
     }
+
 
     public function filterAnalytics(Request $request)
     {
