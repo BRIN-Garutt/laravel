@@ -26,36 +26,36 @@
 
         <!-- Filters Section -->
         <div class="mb-4">
-            <form method="GET" action="{{ route('filterAnalytics') }}">
+            <form method="GET" action="{{ route('filterAnalytics') }}" id="filterForm">
                 <div class="flex items-center space-x-4">
                     <div>
-                        <label for="tanggal" class="block text-sm font-medium text-gray-700">Tanggal</label>
-                        <input type="date" id="tanggal" name="tanggal" value="{{ old('tanggal', $filterData['tanggal'] ?? '') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                        <label for="tanggal" class="block text-sm font-medium text-gray-700 dark:text-gray-100">Tanggal</label>
+                        <input type="date" id="tanggal" name="tanggal" value="{{ old('tanggal', $filterData['tanggal'] ?? '') }}" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     </div>
                     <div>
-                        <label for="hari" class="block text-sm font-medium text-gray-700">Hari</label>
-                        <select id="hari" name="hari" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                            <option value="">Semua</option>
-                            <option value="Senin" {{ (old('hari', $filterData['hari'] ?? '') == 'Senin') ? 'selected' : '' }}>Senin</option>
-                            <option value="Selasa" {{ (old('hari', $filterData['hari'] ?? '') == 'Selasa') ? 'selected' : '' }}>Selasa</option>
-                            <option value="Rabu" {{ (old('hari', $filterData['hari'] ?? '') == 'Rabu') ? 'selected' : '' }}>Rabu</option>
-                            <option value="Kamis" {{ (old('hari', $filterData['hari'] ?? '') == 'Kamis') ? 'selected' : '' }}>Kamis</option>
-                            <option value="Jumat" {{ (old('hari', $filterData['hari'] ?? '') == 'Jumat') ? 'selected' : '' }}>Jumat</option>
-                            <option value="Sabtu" {{ (old('hari', $filterData['hari'] ?? '') == 'Sabtu') ? 'selected' : '' }}>Sabtu</option>
-                            <option value="Minggu" {{ (old('hari', $filterData['hari'] ?? '') == 'Minggu') ? 'selected' : '' }}>Minggu</option>
+                        <label for="hari" class="block text-sm font-medium text-gray-700 dark:text-gray-100">Hari</label>
+                        <select id="hari" name="hari" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" {{ request('hari') == '' ? 'selected' : '' }}>Semua</option>
+                            <option value="Senin" {{ request('hari') == 'Senin' ? 'selected' : '' }}>Senin</option>
+                            <option value="Selasa" {{ request('hari') == 'Selasa' ? 'selected' : '' }}>Selasa</option>
+                            <option value="Rabu" {{ request('hari') == 'Rabu' ? 'selected' : '' }}>Rabu</option>
+                            <option value="Kamis" {{ request('hari') == 'Kamis' ? 'selected' : '' }}>Kamis</option>
+                            <option value="Jumat" {{ request('hari') == 'Jumat' ? 'selected' : '' }}>Jumat</option>
+                            <option value="Sabtu" {{ request('hari') == 'Sabtu' ? 'selected' : '' }}>Sabtu</option>
+                            <option value="Minggu" {{ request('hari') == 'Minggu' ? 'selected' : '' }}>Minggu</option>
                         </select>
                     </div>
                     <div>
-                        <label for="waktu_mulai" class="block text-sm font-medium text-gray-700">Waktu Mulai</label>
-                        <input type="time" id="waktu_mulai" name="waktu_mulai" value="{{ old('waktu_mulai', $filterData['waktu_mulai'] ?? '') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                        <label for="waktu_mulai" class="block text-sm font-medium text-gray-700 dark:text-gray-100">Waktu Mulai</label>
+                        <input type="time" id="waktu_mulai" name="waktu_mulai" value="{{ old('waktu_mulai', $filterData['waktu_mulai'] ?? '') }}" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     </div>
                     <div>
-                        <label for="waktu_selesai" class="block text-sm font-medium text-gray-700">Waktu Selesai</label>
-                        <input type="time" id="waktu_selesai" name="waktu_selesai" value="{{ old('waktu_selesai', $filterData['waktu_selesai'] ?? '') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                        <label for="waktu_selesai" class="block text-sm font-medium text-gray-700 dark:text-gray-100">Waktu Selesai</label>
+                        <input type="time" id="waktu_selesai" name="waktu_selesai" value="{{ old('waktu_selesai', $filterData['waktu_selesai'] ?? '') }}" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     </div>
                     <div>
-                        <label for="submit" class="block text-sm font-medium text-gray-700">Filter</label>
-                        <button type="submit" class="btn bg-blue-500 text-white">Terapkan</button>
+                        <label for="submit" class="block text-sm font-medium text-gray-700 dark:text-gray-100">Filter</label>
+                        <button type="sumbit" id="resetFilter" class="btn bg-red-500 border leading-none border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Reset</button>
                     </div>
                 </div>
             </form>
@@ -63,34 +63,36 @@
 
         <!-- Table Section -->
         <div class="scrollable-table">
-            <table id="c4ytable" align="center" class="min-w-full bg-white border border-gray-300">
-                <thead class="bg-gray-50">
+            <table id="c4ytable" align="center" class="min-w-full bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <thead class="bg-gray-100">
                     <tr>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NO</th>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TANGGAL</th>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">HARI</th>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">WAKTU</th>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SUHU</th>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">KELEMBAPAN</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">NO</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">TANGGAL</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">HARI</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">WAKTU</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">SUHU</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">KELEMBAPAN</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($logs as $index => $log)
                     <tr>
-                        <td class="py-2 px-4 border-b">{{ $index + 1 }}</td>
-                        <td class="py-2 px-4 border-b">{{ $log->tanggal }}</td>
-                        <td class="py-2 px-4 border-b">{{ $log->hari }}</td>
-                        <td class="py-2 px-4 border-b">{{ $log->waktu }}</td>
-                        <td class="py-2 px-4 border-b">{{ $log->suhu }} °C</td>
-                        <td class="py-2 px-4 border-b">{{ $log->kelembapan }} %</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $index + 1 }}</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->tanggal }}</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->hari }}</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->waktu }}</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->suhu }} °C</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->kelembapan }} %</td>
                     </tr>
                     @endforeach
                     <!-- Display average per day if needed -->
-                    <tr class="bg-gray-100">
-                        <td colspan="4" class="py-2 px-4 border-b text-right font-semibold">Rata-rata per Hari</td>
-                        <td class="py-2 px-4 border-b">{{ $averageSuhu }} °C</td>
-                        <td class="py-2 px-4 border-b">{{ $averageKelembapan }} %</td>
+                <tfoot class="bg-gray-100">
+                    <tr>
+                        <td colspan="4" class="py-2 px-4 border-b text-right font-semibold dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Rata-rata per Hari</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $averageSuhu }} °C</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $averageKelembapan }} %</td>
                     </tr>
+                </tfoot>
                 </tbody>
             </table>
         </div>
@@ -108,6 +110,18 @@
         <!-- Include Chart.js and custom script -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
+            document.getElementById('resetFilter').addEventListener('click', function() {
+                // Mengembalikan nilai dropdown ke nilai default
+                document.getElementById('tanggal').value = '';
+                document.getElementById('hari').selectedIndex = 0;
+                document.getElementById('waktu_mulai').value = '';
+                document.getElementById('waktu_selesai').value = '';
+
+                // Submit form untuk menghapus filter
+                document.getElementById('filterForm').submit();
+            });
+
+
             // Parsing data for charts
             var tanggal = <?php echo json_encode($tanggal); ?>;
             var hari = <?php echo json_encode($hari); ?>;
@@ -198,6 +212,13 @@
                             var suhu = row.insertCell(4);
                             var kelembapan = row.insertCell(5);
 
+                            no.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                            tanggal.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                            hari.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                            waktu.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                            suhu.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                            kelembapan.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+
                             no.innerHTML = index + 1;
                             tanggal.innerHTML = data.tanggal[index];
                             hari.innerHTML = data.hari[index];
@@ -205,24 +226,22 @@
                             suhu.innerHTML = data.suhuData[index] + ' °C';
                             kelembapan.innerHTML = data.kelembapanData[index] + ' %';
                         });
-
-                        // Display average per day
-                        var avgRow = tbody.insertRow();
-                        avgRow.classList.add('bg-gray-100');
-                        avgRow.insertCell(0).setAttribute('colspan', '4');
-                        avgRow.cells[0].innerText = 'Rata-rata per Hari';
-                        avgRow.cells[0].classList.add('text-right', 'font-semibold', 'py-2', 'px-4', 'border-b');
-                        avgRow.insertCell(1).innerText = data.averageSuhu + ' °C';
-                        avgRow.cells[1].classList.add('py-2', 'px-4', 'border-b');
-                        avgRow.insertCell(2).innerText = data.averageKelembapan + ' %';
-                        avgRow.cells[2].classList.add('py-2', 'px-4', 'border-b');
                     });
             }
 
             // Memanggil updateCharts() setiap 5 detik
             setInterval(updateCharts, 5000);
         </script>
-
-
+        <!-- Terhubung ke jquery pada header.blade.php di views/components/app -->
+        <script>
+            $(document).ready(function() {
+                $('#c4ytable').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            });
+        </script>
     </div>
 </x-app-layout>
