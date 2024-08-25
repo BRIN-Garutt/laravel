@@ -28,6 +28,65 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#00b1ff",endColorstr="#ffffff",GradientType=1);
 }
 
+.btn-grad {
+    background-image: linear-gradient(
+        to right,
+        #dc2424 0%,
+        #4a569d 51%,
+        #dc2424 100%
+    );
+
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+
+.btn-grad:hover {
+    background-position: right center; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+.dark .btn-grad2 {
+    background-image: linear-gradient(
+        to right,
+        #870000 0%,
+        #190a05 51%,
+        #870000 100%
+    );
+
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+
+.dark .btn-grad3 {
+    background-image: linear-gradient(
+        to right,
+        #16222a 0%,
+        #3a6073 51%,
+        #16222a 100%
+    );
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+
 .bg-gradient-custom {
     background: rgb(224, 0, 0);
     background: -moz-linear-gradient(

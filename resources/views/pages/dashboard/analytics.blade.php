@@ -8,7 +8,7 @@
                 <h1 class="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Analytics</h1>
             </div>
             <!-- Right: Actions -->
-            <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+            <!-- <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                 <x-dropdown-filter align="right" />
                 <x-datepicker />
                 <button class="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white">
@@ -17,12 +17,12 @@
                     </svg>
                     <span class="max-xs:sr-only">Add View</span>
                 </button>
-            </div>
+            </div> -->
         </div>
 
         <!-- Monitoring Section -->
-        <div id="title">MONITORING SUHU DAN KELEMBAPAN</div>
-        <div id="subtitle">Badan Riset dan Inovasi Garut</div>
+        <div id="title" class="text-center font-bold dark:text-gray-100">MONITORING SUHU DAN KELEMBAPAN</div>
+        <br>
 
         <!-- Filters Section -->
         <div class="mb-4">
@@ -55,7 +55,7 @@
                     </div>
                     <div>
                         <label for="submit" class="block text-sm font-medium text-gray-700 dark:text-gray-100">Filter</label>
-                        <button type="sumbit" id="resetFilter" class="btn bg-red-500 border leading-none border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Reset</button>
+                        <button type="sumbit" id="resetFilter" class="btn btn-grad border leading-none border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:btn btn-grad3 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Reset</button>
                     </div>
                 </div>
             </form>
@@ -64,14 +64,14 @@
         <!-- Table Section -->
         <div class="scrollable-table">
             <table id="c4ytable" align="center" class="min-w-full bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <thead class="bg-gray-100">
+                <thead class="bg-red-500">
                     <tr>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">NO</th>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">TANGGAL</th>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">HARI</th>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">WAKTU</th>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">SUHU</th>
-                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">KELEMBAPAN</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-white uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">NO</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-white uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">TANGGAL</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-white uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">HARI</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-white uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">WAKTU</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-white uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">SUHU</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-white uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">KELEMBAPAN</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,14 +86,15 @@
                     </tr>
                     @endforeach
                     <!-- Display average per day if needed -->
-                <tfoot class="bg-gray-100">
+                </tbody>
+                <tfoot class="bg-white">
                     <tr>
                         <td colspan="4" class="py-2 px-4 border-b text-right font-semibold dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Rata-rata per Hari</td>
                         <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $averageSuhu }} °C</td>
                         <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $averageKelembapan }} %</td>
                     </tr>
                 </tfoot>
-                </tbody>
+
             </table>
         </div>
 
@@ -226,13 +227,29 @@
                             suhu.innerHTML = data.suhuData[index] + ' °C';
                             kelembapan.innerHTML = data.kelembapanData[index] + ' %';
                         });
+
+                        // buat footer untuk rata-rata per hari
+                        var tfoot = table.getElementsByTagName('tfoot')[0];
+                        tfoot.innerHTML = '';
+                        var row = tfoot.insertRow();
+                        //buat agar backround footer semuanya sama berwarna bg-white
+                        row.className = 'bg-white';
+                        var cell = row.insertCell(0);
+                        cell.colSpan = 4;
+                        cell.className = 'py-2 px-4 border-b text-right font-semibold dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                        cell.innerHTML = 'Rata-rata per Hari';
+                        var suhuCell = row.insertCell(1);
+                        suhuCell.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                        suhuCell.innerHTML = data.averageSuhu + ' °C';
+                        var kelembapanCell = row.insertCell(2);
+                        kelembapanCell.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                        kelembapanCell.innerHTML = data.averageKelembapan + ' %';
                     });
             }
 
             // Memanggil updateCharts() setiap 5 detik
             setInterval(updateCharts, 5000);
         </script>
-        <!-- Terhubung ke jquery pada header.blade.php di views/components/app -->
         <script>
             $(document).ready(function() {
                 $('#c4ytable').DataTable({

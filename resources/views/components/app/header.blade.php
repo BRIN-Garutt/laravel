@@ -4,6 +4,7 @@
 
             <!-- Header: Left side -->
             <div class="flex">
+                <div class="text-gray-800 dark:text-gray-100 font-bold">Badan Riset dan Inovasi Nasional</div>
 
                 <!-- Hamburger button -->
                 <button
