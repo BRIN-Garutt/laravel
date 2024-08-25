@@ -41,9 +41,30 @@ class DashboardController extends Controller
         return view('pages.dashboard.analytics', compact('logs', 'tanggal', 'hari', 'labels', 'suhuData', 'kelembapanData', 'averageSuhu', 'averageKelembapan'));
     }
 
-    public function getRealtimeData()
+    public function getRealtimeData(Request $request)
     {
-        $logs = DB::table('logs')->orderBy('id', 'asc')->get();
+        // Ambil nilai filter dari request
+        $tanggal = $request->input('tanggal');
+        $hari = $request->input('hari');
+        $waktuMulai = $request->input('waktu_mulai');
+        $waktuSelesai = $request->input('waktu_selesai');
+
+        // Query data berdasarkan filter yang dipilih
+        $query = DB::table('logs')->orderBy('id', 'asc');
+
+        if ($tanggal) {
+            $query->whereDate('tanggal', $tanggal);
+        }
+
+        if ($hari) {
+            $query->where('hari', $hari);
+        }
+
+        if ($waktuMulai && $waktuSelesai) {
+            $query->whereBetween('waktu', [$waktuMulai, $waktuSelesai]);
+        }
+
+        $logs = $query->get();
 
         // Siapkan data untuk chart
         $tanggal = $logs->pluck('tanggal');
@@ -68,13 +89,13 @@ class DashboardController extends Controller
         ]);
     }
 
-
     public function filterAnalytics(Request $request)
     {
         // Ambil nilai dari input filter
         $tanggal = $request->input('tanggal');
         $hari = $request->input('hari');
-        $waktu = $request->input('waktu');
+        $waktuMulai = $request->input('waktu_mulai');
+        $waktuSelesai = $request->input('waktu_selesai');
 
         // Query data berdasarkan filter yang dipilih
         $query = Log::query();
@@ -87,8 +108,8 @@ class DashboardController extends Controller
             $query->where('hari', $hari);
         }
 
-        if ($waktu) {
-            $query->whereTime('waktu', $waktu);
+        if ($waktuMulai && $waktuSelesai) {
+            $query->whereBetween('waktu', [$waktuMulai, $waktuSelesai]);
         }
 
         $logs = $query->get();
@@ -106,6 +127,7 @@ class DashboardController extends Controller
             'kelembapanData' => $logs->pluck('kelembapan'),
             'averageSuhu' => $averageSuhu,
             'averageKelembapan' => $averageKelembapan,
+            'filterData' => $request->all() // Menyimpan data filter untuk digunakan kembali di view
         ]);
     }
 

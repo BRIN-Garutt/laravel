@@ -30,24 +30,28 @@
                 <div class="flex items-center space-x-4">
                     <div>
                         <label for="tanggal" class="block text-sm font-medium text-gray-700">Tanggal</label>
-                        <input type="date" id="tanggal" name="tanggal" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                        <input type="date" id="tanggal" name="tanggal" value="{{ old('tanggal', $filterData['tanggal'] ?? '') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                     </div>
                     <div>
                         <label for="hari" class="block text-sm font-medium text-gray-700">Hari</label>
                         <select id="hari" name="hari" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                             <option value="">Semua</option>
-                            <option value="Senin">Senin</option>
-                            <option value="Selasa">Selasa</option>
-                            <option value="Rabu">Rabu</option>
-                            <option value="Kamis">Kamis</option>
-                            <option value="Jumat">Jumat</option>
-                            <option value="Sabtu">Sabtu</option>
-                            <option value="Minggu">Minggu</option>
+                            <option value="Senin" {{ (old('hari', $filterData['hari'] ?? '') == 'Senin') ? 'selected' : '' }}>Senin</option>
+                            <option value="Selasa" {{ (old('hari', $filterData['hari'] ?? '') == 'Selasa') ? 'selected' : '' }}>Selasa</option>
+                            <option value="Rabu" {{ (old('hari', $filterData['hari'] ?? '') == 'Rabu') ? 'selected' : '' }}>Rabu</option>
+                            <option value="Kamis" {{ (old('hari', $filterData['hari'] ?? '') == 'Kamis') ? 'selected' : '' }}>Kamis</option>
+                            <option value="Jumat" {{ (old('hari', $filterData['hari'] ?? '') == 'Jumat') ? 'selected' : '' }}>Jumat</option>
+                            <option value="Sabtu" {{ (old('hari', $filterData['hari'] ?? '') == 'Sabtu') ? 'selected' : '' }}>Sabtu</option>
+                            <option value="Minggu" {{ (old('hari', $filterData['hari'] ?? '') == 'Minggu') ? 'selected' : '' }}>Minggu</option>
                         </select>
                     </div>
                     <div>
-                        <label for="waktu" class="block text-sm font-medium text-gray-700">Waktu</label>
-                        <input type="time" id="waktu" name="waktu" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                        <label for="waktu_mulai" class="block text-sm font-medium text-gray-700">Waktu Mulai</label>
+                        <input type="time" id="waktu_mulai" name="waktu_mulai" value="{{ old('waktu_mulai', $filterData['waktu_mulai'] ?? '') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    </div>
+                    <div>
+                        <label for="waktu_selesai" class="block text-sm font-medium text-gray-700">Waktu Selesai</label>
+                        <input type="time" id="waktu_selesai" name="waktu_selesai" value="{{ old('waktu_selesai', $filterData['waktu_selesai'] ?? '') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                     </div>
                     <div>
                         <label for="submit" class="block text-sm font-medium text-gray-700">Filter</label>
@@ -158,8 +162,18 @@
                 }
             });
 
+
             function updateCharts() {
-                fetch('/realtime-data')
+                // Ambil nilai filter
+                var tanggal = document.getElementById('tanggal').value;
+                var hari = document.getElementById('hari').value;
+                var waktuMulai = document.getElementById('waktu_mulai').value;
+                var waktuSelesai = document.getElementById('waktu_selesai').value;
+
+                // Buat URL dengan query string filter
+                var url = `/realtime-data?tanggal=${encodeURIComponent(tanggal)}&hari=${encodeURIComponent(hari)}&waktu_mulai=${encodeURIComponent(waktuMulai)}&waktu_selesai=${encodeURIComponent(waktuSelesai)}`;
+
+                fetch(url)
                     .then(response => response.json())
                     .then(data => {
                         // Update chart data
