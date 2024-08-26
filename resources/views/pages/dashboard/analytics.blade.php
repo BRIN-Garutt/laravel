@@ -248,7 +248,7 @@
             }
 
             // Memanggil updateCharts() setiap 5 detik
-            setInterval(updateCharts, 5000);
+            setInterval(updateCharts, 2000);
         </script>
         <script>
             $(document).ready(function() {
