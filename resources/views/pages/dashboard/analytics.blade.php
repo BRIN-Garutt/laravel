@@ -8,7 +8,7 @@
                 <h1 class="text-2xl md:text-3xl text-gray-800 dark:text-gray-100 font-bold">Analytics</h1>
             </div>
             <!-- Right: Actions -->
-            <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+            <!-- <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
                 <x-dropdown-filter align="right" />
                 <x-datepicker />
                 <button class="btn bg-gray-900 text-gray-100 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-white">
@@ -17,42 +17,89 @@
                     </svg>
                     <span class="max-xs:sr-only">Add View</span>
                 </button>
-            </div>
+            </div> -->
         </div>
 
         <!-- Monitoring Section -->
-        <div id="title">MONITORING SUHU DAN KELEMBAPAN</div>
-        <div id="subtitle">Badan Riset dan Inovasi Garut</div>
+        <div id="title" class="text-center font-bold dark:text-gray-100">MONITORING SUHU DAN KELEMBAPAN</div>
+        <br>
 
+        <!-- Filters Section -->
+        <div class="mb-4">
+            <form method="GET" action="{{ route('filterAnalytics') }}" id="filterForm">
+                <div class="flex items-center space-x-4">
+                    <div>
+                        <label for="tanggal" class="block text-sm font-medium text-gray-700 dark:text-gray-100">Tanggal</label>
+                        <input type="date" id="tanggal" name="tanggal" value="{{ old('tanggal', $filterData['tanggal'] ?? '') }}" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="hari" class="block text-sm font-medium text-gray-700 dark:text-gray-100">Hari</label>
+                        <select id="hari" name="hari" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.4 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="" {{ request('hari') == '' ? 'selected' : '' }}>Semua</option>
+                            <option value="Senin" {{ request('hari') == 'Senin' ? 'selected' : '' }}>Senin</option>
+                            <option value="Selasa" {{ request('hari') == 'Selasa' ? 'selected' : '' }}>Selasa</option>
+                            <option value="Rabu" {{ request('hari') == 'Rabu' ? 'selected' : '' }}>Rabu</option>
+                            <option value="Kamis" {{ request('hari') == 'Kamis' ? 'selected' : '' }}>Kamis</option>
+                            <option value="Jumat" {{ request('hari') == 'Jumat' ? 'selected' : '' }}>Jumat</option>
+                            <option value="Sabtu" {{ request('hari') == 'Sabtu' ? 'selected' : '' }}>Sabtu</option>
+                            <option value="Minggu" {{ request('hari') == 'Minggu' ? 'selected' : '' }}>Minggu</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="waktu_mulai" class="block text-sm font-medium text-gray-700 dark:text-gray-100">Waktu Mulai</label>
+                        <input type="time" id="waktu_mulai" name="waktu_mulai" value="{{ old('waktu_mulai', $filterData['waktu_mulai'] ?? '') }}" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="waktu_selesai" class="block text-sm font-medium text-gray-700 dark:text-gray-100">Waktu Selesai</label>
+                        <input type="time" id="waktu_selesai" name="waktu_selesai" value="{{ old('waktu_selesai', $filterData['waktu_selesai'] ?? '') }}" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="submit" class="block text-sm font-medium text-gray-700 dark:text-gray-100">Filter</label>
+                        <button type="sumbit" id="resetFilter" class="btn btn-grad border leading-none border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:btn btn-grad3 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Table Section -->
         <div class="scrollable-table">
-            <table id="c4ytable" align="center">
-                <thead>
+            <table id="c4ytable" align="center" class="min-w-full bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <thead class="bg-red-500">
                     <tr>
-                        <th width="36"><strong>NO</strong></th>
-                        <th width="90"><strong>TANGGAL</strong></th>
-                        <th width="90"><strong>HARI</strong></th>
-                        <th width="75"><strong>WAKTU</strong></th>
-                        <th width="130"><strong>SUHU</strong></th>
-                        <th width="200"><strong>KELEMBAPAN</strong></th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-white uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">NO</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-white uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">TANGGAL</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-white uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">HARI</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-white uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">WAKTU</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-white uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">SUHU</th>
+                        <th class="py-2 px-4 border-b text-left text-xs font-medium text-white uppercase tracking-wider dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">KELEMBAPAN</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($logs as $index => $log)
                     <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $log->tanggal }}</td>
-                        <td>{{ $log->hari }}</td>
-                        <td>{{ $log->waktu }}</td>
-                        <td>{{ $log->suhu }}</td>
-                        <td>{{ $log->kelembapan }}</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $index + 1 }}</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->tanggal }}</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->hari }}</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->waktu }}</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->suhu }} °C</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->kelembapan }} %</td>
                     </tr>
                     @endforeach
+                    <!-- Display average per day if needed -->
                 </tbody>
+                <tfoot class="bg-white">
+                    <tr>
+                        <td colspan="4" class="py-2 px-4 border-b text-right font-semibold dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Rata-rata per Hari</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $averageSuhu }} °C</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $averageKelembapan }} %</td>
+                    </tr>
+                </tfoot>
+
             </table>
         </div>
 
-        <!-- Charts -->
-        <div id="charts" class="flex justify-between">
+        <!-- Charts Section -->
+        <div id="charts" class="flex justify-between mt-6">
             <div class="chartContainer w-1/2 p-2">
                 <canvas id="suhuChart"></canvas>
             </div>
@@ -64,6 +111,18 @@
         <!-- Include Chart.js and custom script -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
+            document.getElementById('resetFilter').addEventListener('click', function() {
+                // Mengembalikan nilai dropdown ke nilai default
+                document.getElementById('tanggal').value = '';
+                document.getElementById('hari').selectedIndex = 0;
+                document.getElementById('waktu_mulai').value = '';
+                document.getElementById('waktu_selesai').value = '';
+
+                // Submit form untuk menghapus filter
+                document.getElementById('filterForm').submit();
+            });
+
+
             // Parsing data for charts
             var tanggal = <?php echo json_encode($tanggal); ?>;
             var hari = <?php echo json_encode($hari); ?>;
@@ -118,8 +177,18 @@
                 }
             });
 
+
             function updateCharts() {
-                fetch('/realtime-data')
+                // Ambil nilai filter
+                var tanggal = document.getElementById('tanggal').value;
+                var hari = document.getElementById('hari').value;
+                var waktuMulai = document.getElementById('waktu_mulai').value;
+                var waktuSelesai = document.getElementById('waktu_selesai').value;
+
+                // Buat URL dengan query string filter
+                var url = `/realtime-data?tanggal=${encodeURIComponent(tanggal)}&hari=${encodeURIComponent(hari)}&waktu_mulai=${encodeURIComponent(waktuMulai)}&waktu_selesai=${encodeURIComponent(waktuSelesai)}`;
+
+                fetch(url)
                     .then(response => response.json())
                     .then(data => {
                         // Update chart data
@@ -131,7 +200,7 @@
                         kelembapanChart.data.datasets[0].data = data.kelembapanData;
                         kelembapanChart.update();
 
-                        // Update tabel data
+                        // Update table data
                         var table = document.getElementById('c4ytable');
                         var tbody = table.getElementsByTagName('tbody')[0];
                         tbody.innerHTML = '';
@@ -144,19 +213,52 @@
                             var suhu = row.insertCell(4);
                             var kelembapan = row.insertCell(5);
 
+                            no.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                            tanggal.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                            hari.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                            waktu.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                            suhu.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                            kelembapan.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+
                             no.innerHTML = index + 1;
                             tanggal.innerHTML = data.tanggal[index];
                             hari.innerHTML = data.hari[index];
                             waktu.innerHTML = label;
-                            suhu.innerHTML = data.suhuData[index];
-                            kelembapan.innerHTML = data.kelembapanData[index];
+                            suhu.innerHTML = data.suhuData[index] + ' °C';
+                            kelembapan.innerHTML = data.kelembapanData[index] + ' %';
                         });
+
+                        // buat footer untuk rata-rata per hari
+                        var tfoot = table.getElementsByTagName('tfoot')[0];
+                        tfoot.innerHTML = '';
+                        var row = tfoot.insertRow();
+                        //buat agar backround footer semuanya sama berwarna bg-white
+                        row.className = 'bg-white';
+                        var cell = row.insertCell(0);
+                        cell.colSpan = 4;
+                        cell.className = 'py-2 px-4 border-b text-right font-semibold dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                        cell.innerHTML = 'Rata-rata per Hari';
+                        var suhuCell = row.insertCell(1);
+                        suhuCell.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                        suhuCell.innerHTML = data.averageSuhu + ' °C';
+                        var kelembapanCell = row.insertCell(2);
+                        kelembapanCell.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
+                        kelembapanCell.innerHTML = data.averageKelembapan + ' %';
                     });
             }
 
-            // Polling setiap 5 detik
+            // Memanggil updateCharts() setiap 5 detik
             setInterval(updateCharts, 5000);
         </script>
-
+        <script>
+            $(document).ready(function() {
+                $('#c4ytable').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            });
+        </script>
     </div>
 </x-app-layout>

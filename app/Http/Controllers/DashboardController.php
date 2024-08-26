@@ -33,16 +33,38 @@ class DashboardController extends Controller
         $suhuData = $logs->pluck('suhu');
         $kelembapanData = $logs->pluck('kelembapan');
 
+        // Hitung rata-rata suhu dan kelembapan
+        $averageSuhu = $logs->avg('suhu');
+        $averageKelembapan = $logs->avg('kelembapan');
+
         // Kirim variabel ke view
-        return view('pages.dashboard.analytics', compact('logs', 'tanggal', 'hari', 'labels', 'suhuData', 'kelembapanData'));
+        return view('pages.dashboard.analytics', compact('logs', 'tanggal', 'hari', 'labels', 'suhuData', 'kelembapanData', 'averageSuhu', 'averageKelembapan'));
     }
 
-    public function getRealtimeData()
+    public function getRealtimeData(Request $request)
     {
-        // Ambil data terbaru dari tabel logs
-        // $logs = Log::latest()->take(5)->get();
-        //memastikan data yang ditampilkan itu ascending
-        $logs = DB::table('logs')->orderBy('id', 'asc')->get();
+        // Ambil nilai filter dari request
+        $tanggal = $request->input('tanggal');
+        $hari = $request->input('hari');
+        $waktuMulai = $request->input('waktu_mulai');
+        $waktuSelesai = $request->input('waktu_selesai');
+
+        // Query data berdasarkan filter yang dipilih
+        $query = DB::table('logs')->orderBy('id', 'asc');
+
+        if ($tanggal) {
+            $query->whereDate('tanggal', $tanggal);
+        }
+
+        if ($hari) {
+            $query->where('hari', $hari);
+        }
+
+        if ($waktuMulai && $waktuSelesai) {
+            $query->whereBetween('waktu', [$waktuMulai, $waktuSelesai]);
+        }
+
+        $logs = $query->get();
 
         // Siapkan data untuk chart
         $tanggal = $logs->pluck('tanggal');
@@ -51,6 +73,10 @@ class DashboardController extends Controller
         $suhuData = $logs->pluck('suhu');
         $kelembapanData = $logs->pluck('kelembapan');
 
+        // Hitung rata-rata suhu dan kelembapan
+        $averageSuhu = $logs->avg('suhu');
+        $averageKelembapan = $logs->avg('kelembapan');
+
         // Kembalikan data dalam bentuk JSON
         return response()->json([
             'tanggal' => $tanggal,
@@ -58,8 +84,53 @@ class DashboardController extends Controller
             'labels' => $labels,
             'suhuData' => $suhuData,
             'kelembapanData' => $kelembapanData,
+            'averageSuhu' => $averageSuhu,
+            'averageKelembapan' => $averageKelembapan,
         ]);
     }
+
+    public function filterAnalytics(Request $request)
+    {
+        // Ambil nilai dari input filter
+        $tanggal = $request->input('tanggal');
+        $hari = $request->input('hari');
+        $waktuMulai = $request->input('waktu_mulai');
+        $waktuSelesai = $request->input('waktu_selesai');
+
+        // Query data berdasarkan filter yang dipilih
+        $query = Log::query();
+
+        if ($tanggal) {
+            $query->whereDate('tanggal', $tanggal);
+        }
+
+        if ($hari) {
+            $query->where('hari', $hari);
+        }
+
+        if ($waktuMulai && $waktuSelesai) {
+            $query->whereBetween('waktu', [$waktuMulai, $waktuSelesai]);
+        }
+
+        $logs = $query->get();
+
+        // Hitung rata-rata suhu dan kelembapan per hari
+        $averageSuhu = $logs->avg('suhu');
+        $averageKelembapan = $logs->avg('kelembapan');
+
+        return view('pages.dashboard.analytics', [
+            'logs' => $logs,
+            'tanggal' => $logs->pluck('tanggal'),
+            'hari' => $logs->pluck('hari'),
+            'labels' => $logs->pluck('waktu'),
+            'suhuData' => $logs->pluck('suhu'),
+            'kelembapanData' => $logs->pluck('kelembapan'),
+            'averageSuhu' => $averageSuhu,
+            'averageKelembapan' => $averageKelembapan,
+            'filterData' => $request->all() // Menyimpan data filter untuk digunakan kembali di view
+        ]);
+    }
+
 
     /**
      * Displays the fintech screen

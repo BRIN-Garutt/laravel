@@ -4,14 +4,14 @@
 
             <!-- Header: Left side -->
             <div class="flex">
-                
+                <div class="text-gray-800 dark:text-gray-100 font-bold">Badan Riset dan Inovasi Nasional</div>
+
                 <!-- Hamburger button -->
                 <button
                     class="text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 lg:hidden"
                     @click.stop="sidebarOpen = !sidebarOpen"
                     aria-controls="sidebar"
-                    :aria-expanded="sidebarOpen"
-                >
+                    :aria-expanded="sidebarOpen">
                     <span class="sr-only">Open sidebar</span>
                     <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <rect x="4" y="5" width="16" height="2" />
@@ -35,7 +35,7 @@
                 <x-dropdown-help align="right" />
 
                 <!-- Dark mode toggle -->
-                <x-theme-toggle />                
+                <x-theme-toggle />
 
                 <!-- Divider -->
                 <hr class="w-px h-6 bg-gray-200 dark:bg-gray-700/60 border-none" />
@@ -47,4 +47,22 @@
 
         </div>
     </div>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+
 </header>
