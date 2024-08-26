@@ -27,10 +27,19 @@ class SensorController extends Controller
             'suhu' => $request->input('temperature'),
             'kelembapan' => $request->input('humidity'),
             'tanggal' => now()->toDateString(),
-            'waktu' => now()->toTimeString(),
             'hari' => now()->format('l'),
+            'waktu' => now()->toTimeString(),
         ]);
 
         return response()->json(['success' => 'Data saved successfully'], 200);
+    }
+    // Method to retrieve sensor data
+    public function index()
+    {
+        // Retrieve all sensor data from the logs table
+        $logs = Log::all();
+
+        // Return the data as JSON
+        return response()->json($logs);
     }
 }
