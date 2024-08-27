@@ -35,7 +35,7 @@ class SensorController extends Controller
             'waktu' => $now->format('H:i:s'),
         ]);
 
-        // return response()->json(['success' => 'Data saved successfully'], 200);
+        return response()->json(['success' => 'Data saved successfully'], 200);
     }
     // Method to retrieve sensor data
     public function index()
