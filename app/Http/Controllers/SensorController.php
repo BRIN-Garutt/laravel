@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Log;
+use Carbon\Carbon;
 
 class SensorController extends Controller
 {
@@ -22,13 +23,18 @@ class SensorController extends Controller
             return response()->json(['error' => 'Invalid API key'], 403);
         }
 
+        // Set timezone Asia/Jakarta
+        $now = Carbon::now('Asia/Jakarta');
+
         // Simpan data ke tabel logs
         Log::create([
             'suhu' => $request->input('temperature'),
             'kelembapan' => $request->input('humidity'),
-            'tanggal' => now()->toDateString(),
-            'hari' => now()->format('l'),
-            'waktu' => now()->toTimeString(),
+            'tanggal' => $now->format('d-m-Y'),
+            'hari' => $now->locale('id')->translatedFormat('l'),
+            'waktu' => $now->format('H:i:s'),
+            // 'created_at' => $now,
+            // 'updated_at' => $now,
         ]);
 
         return response()->json(['success' => 'Data saved successfully'], 200);
