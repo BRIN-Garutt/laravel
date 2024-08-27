@@ -11,12 +11,14 @@ class Log extends Model
 
     protected $table = 'logs';
     protected $primaryKey = 'id';
+    public $timestamps = false;
 
     protected $fillable = [
+        'kelembapan',
+        'suhu',
         'tanggal',
         'hari',
         'waktu',
-        'suhu',
-        'kelembapan'
+
     ];
 }
