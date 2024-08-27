@@ -30,12 +30,23 @@ class SensorController extends Controller
         Log::create([
             'suhu' => $request->input('temperature'),
             'kelembapan' => $request->input('humidity'),
-            'tanggal' => now()->toDateString(),
+            'tanggal' => $now->toDateString(),
             'hari' => $now->locale('id')->translatedFormat('l'),
             'waktu' => $now->format('H:i:s'),
         ]);
 
-        return response()->json(['success' => 'Data saved successfully'], 200);
+        // Ambil data terbaru
+        $logs = Log::orderBy('id', 'asc')->get();
+        $averageSuhu = $logs->avg('suhu');
+        $averageKelembapan = $logs->avg('kelembapan');
+
+        return response()->json([
+            'logs' => $logs,
+            'averageSuhu' => $averageSuhu,
+            'averageKelembapan' => $averageKelembapan,
+        ]);
+
+        // return response()->json(['success' => 'Data saved successfully'], 200);
     }
     // Method to retrieve sensor data
     public function index()

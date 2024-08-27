@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\DataFeed;
 use App\Models\Log;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -67,7 +68,10 @@ class DashboardController extends Controller
         $logs = $query->get();
 
         // Siapkan data untuk chart
-        $tanggal = $logs->pluck('tanggal');
+        // Format tanggal
+        $tanggal = $logs->pluck('tanggal')->map(function ($date) {
+            return \Carbon\Carbon::parse($date)->format('d-m-Y');
+        });
         $hari = $logs->pluck('hari');
         $labels = $logs->pluck('waktu');
         $suhuData = $logs->pluck('suhu');
@@ -113,6 +117,11 @@ class DashboardController extends Controller
         }
 
         $logs = $query->get();
+
+        // Format tanggal
+        $tanggal = $logs->pluck('tanggal')->map(function ($date) {
+            return \Carbon\Carbon::parse($date)->format('d-m-Y');
+        });
 
         // Hitung rata-rata suhu dan kelembapan per hari
         $averageSuhu = $logs->avg('suhu');
