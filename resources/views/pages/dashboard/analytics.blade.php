@@ -173,7 +173,6 @@
                 var hari = document.getElementById('hari').value;
                 var waktuMulai = document.getElementById('waktu_mulai').value;
                 var waktuSelesai = document.getElementById('waktu_selesai').value;
-                d
 
                 // Buat URL dengan query string filter
                 var url = `/realtime-data?tanggal=${encodeURIComponent(tanggal)}&hari=${encodeURIComponent(hari)}&waktu_mulai=${encodeURIComponent(waktuMulai)}&waktu_selesai=${encodeURIComponent(waktuSelesai)}`;
