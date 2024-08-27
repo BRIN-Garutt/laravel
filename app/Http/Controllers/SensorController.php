@@ -35,17 +35,6 @@ class SensorController extends Controller
             'waktu' => $now->format('H:i:s'),
         ]);
 
-        // Ambil data terbaru
-        $logs = Log::orderBy('id', 'asc')->get();
-        $averageSuhu = $logs->avg('suhu');
-        $averageKelembapan = $logs->avg('kelembapan');
-
-        return response()->json([
-            'logs' => $logs,
-            'averageSuhu' => $averageSuhu,
-            'averageKelembapan' => $averageKelembapan,
-        ]);
-
         // return response()->json(['success' => 'Data saved successfully'], 200);
     }
     // Method to retrieve sensor data
