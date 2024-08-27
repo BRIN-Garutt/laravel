@@ -19,7 +19,7 @@ class LogSeeder extends Seeder
         Log::create([
             'suhu' => 25.5,
             'kelembapan' => 60.5,
-            'tanggal' => $now->format('Y-m-d'), // Simpan dalam format MySQL (YYYY-MM-DD)
+            'tanggal' => $now->format('Y-m-d'),
             'hari' => $now->locale('id')->translatedFormat('l'),
             'waktu' => $now->format('H:i:s'),
         ]);

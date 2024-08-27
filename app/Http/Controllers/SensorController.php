@@ -30,7 +30,7 @@ class SensorController extends Controller
         Log::create([
             'suhu' => $request->input('temperature'),
             'kelembapan' => $request->input('humidity'),
-            'tanggal' => now()->format('d:m:Y'),
+            'tanggal' => now()->toDateString(),
             'hari' => $now->locale('id')->translatedFormat('l'),
             'waktu' => $now->format('H:i:s'),
         ]);
