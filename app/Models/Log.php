@@ -19,6 +19,5 @@ class Log extends Model
         'tanggal',
         'hari',
         'waktu',
-
     ];
 }

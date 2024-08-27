@@ -67,7 +67,7 @@
                     @foreach($logs as $index => $log)
                     <tr>
                         <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $index + 1 }}</td>
-                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ \Carbon\Carbon::parse($log->tanggal)->format('d-m-Y')  }}</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ date('d-m-Y', strtotime($log->tanggal))  }}</td>
                         <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->hari }}</td>
                         <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->waktu }}</td>
                         <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->suhu }} °C</td>
@@ -173,7 +173,7 @@
                 var hari = document.getElementById('hari').value;
                 var waktuMulai = document.getElementById('waktu_mulai').value;
                 var waktuSelesai = document.getElementById('waktu_selesai').value;
-                d
+
 
                 // Buat URL dengan query string filter
                 var url = `/realtime-data?tanggal=${encodeURIComponent(tanggal)}&hari=${encodeURIComponent(hari)}&waktu_mulai=${encodeURIComponent(waktuMulai)}&waktu_selesai=${encodeURIComponent(waktuSelesai)}`;
