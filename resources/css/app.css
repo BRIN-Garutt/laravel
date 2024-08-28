@@ -7,14 +7,23 @@
 
 @import "tailwindcss/utilities";
 
-/* Custom styles for DataTables buttons in dark mode */
-.dark-mode .dt-button {
-    background-color: #1e3a8a; /* Blue color */
+/* CSS untuk mode gelap buttons DataTables */
+/* print mempunyai format sendiri (tidak ikut dengan copy) jadi digabung(menjadi 2 dengan copy, excel, pdf */
+.dark .buttons-html5,
+.dark .buttons-print {
+    background-color: #102467; /* Warna biru untuk tombol */
     color: white;
-    border: none;
 }
-.dark-mode .dt-button:hover {
-    background-color: #3b82f6; /* Lighter blue on hover */
+
+.dark .buttons-html5:hover,
+.dark .buttons-print:hover {
+    background-color: #0c2c83 !important; /* Warna biru lebih gelap untuk hover */
+    color: white;
+}
+
+.dark .buttons-html5:focus,
+.dark .buttons-print:focus {
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); /* Highlight untuk fokus */
 }
 
 /* Custom styles */
