@@ -1,6 +1,5 @@
 <x-app-layout>
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-
         <!-- Analytics actions -->
         <div class="sm:flex sm:justify-between sm:items-center mb-8">
             <!-- Left: Title -->
@@ -44,7 +43,7 @@
                     </div>
                     <div>
                         <label for="submit" class="block text-sm font-medium text-gray-700 dark:text-gray-100">Filter</label>
-                        <button type="sumbit" id="resetFilter" class="btn btn-grad border leading-none border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:btn btn-grad3 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Reset</button>
+                        <button type="submit" id="resetFilter" class="btn btn-grad border leading-none border-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:btn btn-grad3 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Reset</button>
                     </div>
                 </div>
             </form>
@@ -74,7 +73,6 @@
                         <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $log->kelembapan }} %</td>
                     </tr>
                     @endforeach
-                    <!-- Display average per day if needed -->
                 </tbody>
                 <tfoot class="bg-white">
                     <tr>
@@ -83,7 +81,6 @@
                         <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $averageKelembapan }} %</td>
                     </tr>
                 </tfoot>
-
             </table>
         </div>
 
@@ -110,7 +107,6 @@
                 // Submit form untuk menghapus filter
                 document.getElementById('filterForm').submit();
             });
-
 
             // Parsing data for charts
             var tanggal = <?php echo json_encode($tanggal); ?>;
@@ -166,7 +162,6 @@
                 }
             });
 
-
             function updateCharts() {
                 // Ambil nilai filter
                 var tanggal = document.getElementById('tanggal').value;
@@ -190,62 +185,42 @@
                         kelembapanChart.update();
 
                         // Update table data
-                        var table = document.getElementById('c4ytable');
-                        var tbody = table.getElementsByTagName('tbody')[0];
-                        tbody.innerHTML = '';
+                        var table = $('#c4ytable').DataTable();
+                        table.clear();
+
                         data.labels.forEach((label, index) => {
-                            var row = tbody.insertRow();
-                            var no = row.insertCell(0);
-                            var tanggal = row.insertCell(1);
-                            var hari = row.insertCell(2);
-                            var waktu = row.insertCell(3);
-                            var suhu = row.insertCell(4);
-                            var kelembapan = row.insertCell(5);
-
-                            no.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
-                            tanggal.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
-                            hari.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
-                            waktu.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
-                            suhu.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
-                            kelembapan.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
-
-                            no.innerHTML = index + 1;
-                            tanggal.innerHTML = data.tanggal[index];
-                            hari.innerHTML = data.hari[index];
-                            waktu.innerHTML = label;
-                            suhu.innerHTML = data.suhuData[index] + ' °C';
-                            kelembapan.innerHTML = data.kelembapanData[index] + ' %';
+                            table.row.add([
+                                index + 1,
+                                data.tanggal[index],
+                                data.hari[index],
+                                label,
+                                data.suhuData[index] + ' °C',
+                                data.kelembapanData[index] + ' %'
+                            ]).draw(false);
                         });
 
-                        // buat footer untuk rata-rata per hari
-                        var tfoot = table.getElementsByTagName('tfoot')[0];
-                        tfoot.innerHTML = '';
-                        var row = tfoot.insertRow();
-                        //buat agar backround footer semuanya sama berwarna bg-white
-                        row.className = 'bg-white';
-                        var cell = row.insertCell(0);
-                        cell.colSpan = 4;
-                        cell.className = 'py-2 px-4 border-b text-right font-semibold dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
-                        cell.innerHTML = 'Rata-rata per Hari';
-                        var suhuCell = row.insertCell(1);
-                        suhuCell.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
-                        suhuCell.innerHTML = data.averageSuhu + ' °C';
-                        var kelembapanCell = row.insertCell(2);
-                        kelembapanCell.className = 'py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500';
-                        kelembapanCell.innerHTML = data.averageKelembapan + ' %';
+                        // Update footer for average per day
+                        var tfoot = table.table().footer();
+                        $(tfoot).html(`
+                            <tr class="bg-white">
+                                <td colspan="4" class="py-2 px-4 border-b text-right font-semibold dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Rata-rata per Hari</td>
+                                <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">${data.averageSuhu} °C</td>
+                                <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">${data.averageKelembapan} %</td>
+                            </tr>
+                        `);
                     });
             }
 
             // Memanggil updateCharts() setiap 2 detik
             setInterval(updateCharts, 2000);
-        </script>
-        <script>
+
             $(document).ready(function() {
                 $('#c4ytable').DataTable({
                     dom: 'Bfrtip',
                     buttons: [
                         'copy', 'csv', 'excel', 'pdf', 'print'
-                    ]
+                    ],
+                    pageLength: 10
                 });
             });
         </script>

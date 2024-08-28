@@ -144,15 +144,4 @@ class DashboardController extends Controller
             'filterData' => $request->all() // Menyimpan data filter untuk digunakan kembali di view
         ]);
     }
-
-
-    /**
-     * Displays the fintech screen
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function fintech()
-    {
-        return view('pages/dashboard/fintech');
-    }
 }
