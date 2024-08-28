@@ -8,18 +8,21 @@
 @import "tailwindcss/utilities";
 
 /* CSS untuk mode gelap buttons datatable */
-.dark .buttons-html5 {
-    background-color: #1e40af; /* Warna biru untuk tombol */
-    color: white;
+.dark .buttons-html5,
+.dark .buttons-print {
+    background-color: #172d78 !important; /* Warna biru untuk tombol */
+    color: white !important;
 }
 
-.dark .buttons-html5:hover {
-    background-color: #1e3a8a; /* Warna biru lebih gelap untuk hover */
-    color: white;
+.dark .buttons-html5:hover,
+.dark .buttons-print:hover {
+    background-color: #1f3d8f !important; /* Warna biru lebih gelap untuk hover */
+    color: white !important;
 }
 
-.dark .buttons-html5:focus {
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); /* Highlight untuk fokus */
+.dark .buttons-html5:focus,
+.dark .buttons-print:focus {
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5) !important; /* Highlight untuk fokus */
 }
 
 /* Custom styles */
