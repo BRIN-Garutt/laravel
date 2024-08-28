@@ -25,9 +25,8 @@ Chart.register(
     Tooltip
 );
 
-// A chart built with Chart.js3
 // https://www.chartjs.org/
-// Mendeteksi kelembapan dari web openweathermap.org pameungpeuk garut
+// Mendeteksi suhu dari web openweathermap.org pameungpeuk garut
 const apiKey = "dff875fb10cfae1af293b659110fff2e"; // API key Anda
 const apiUrl = `https://api.openweathermap.org/data/2.5/weather?id=1632972&units=metric&appid=${apiKey}`;
 

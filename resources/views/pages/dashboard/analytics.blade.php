@@ -236,7 +236,7 @@
                     });
             }
 
-            // Memanggil updateCharts() setiap 5 detik
+            // Memanggil updateCharts() setiap 2 detik
             setInterval(updateCharts, 2000);
         </script>
         <script>

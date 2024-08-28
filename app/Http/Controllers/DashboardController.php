@@ -6,15 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\DataFeed;
 use App\Models\Log;
+use App\Models\User;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $dataFeed = new DataFeed();
+        $userCount = User::count(); // Menghitung jumlah user
+        // Hitung jumlah user yang aktif dalam 5 menit terakhir dari tabel sessions
+        $activeUserCount = DB::table('sessions')
+            ->where('last_activity', '>=', Carbon::now()->subMinutes(5)->timestamp)
+            ->count();
 
-        return view('pages/dashboard/dashboard', compact('dataFeed'));
+        return view('pages/dashboard/dashboard', compact('userCount', 'activeUserCount'));
     }
 
     /**

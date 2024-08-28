@@ -1,145 +1,127 @@
 // Import Chart.js
 import {
-  Chart, LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip,
-} from 'chart.js';
-import 'chartjs-adapter-moment';
-import { chartAreaGradient } from '../app';
+    Chart,
+    BarController,
+    BarElement,
+    CategoryScale,
+    LinearScale,
+    Tooltip,
+} from "chart.js";
+import { hexToRGB } from "../utils";
 
-// Import utilities
-import { tailwindConfig, formatValue, hexToRGB } from '../utils';
+// Register the necessary components
+Chart.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip);
 
-Chart.register(LineController, LineElement, Filler, PointElement, LinearScale, TimeScale, Tooltip);
-
-// A chart built with Chart.js 3
-// https://www.chartjs.org/
+// Define the chart function
 const dashboardCard02 = () => {
-  const ctx = document.getElementById('dashboard-card-02');
-  if (!ctx) return;
+    const ctx = document.getElementById("dashboard-card-02");
+    const avgTempElement = document.getElementById("average-temperature");
 
-  const darkMode = localStorage.getItem('dark-mode') === 'true';
+    if (!ctx || !avgTempElement) return;
 
-  const tooltipBodyColor = {
-    light: '#6B7280',
-    dark: '#9CA3AF'
-  };
+    const darkMode = localStorage.getItem("dark-mode") === "true";
 
-  const tooltipBgColor = {
-    light: '#ffffff',
-    dark: '#374151'
-  };
+    const tooltipBodyColor = {
+        light: "#6B7280",
+        dark: "#9CA3AF",
+    };
 
-  const tooltipBorderColor = {
-    light: '#E5E7EB',
-    dark: '#4B5563'
-  };   
+    const tooltipBgColor = {
+        light: "#ffffff",
+        dark: "#374151",
+    };
 
-  fetch('/json-data-feed?datatype=2')
-    .then(a => {
-      return a.json();
-    })
-    .then(result => {
+    const tooltipBorderColor = {
+        light: "#E5E7EB",
+        dark: "#4B5563",
+    };
 
-      const dataset1 = result.data.slice(0, 26);
-      const dataset2 = result.data.slice(26, 52);
+    const apiKey = "dff875fb10cfae1af293b659110fff2e";
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?id=1632972&units=metric&appid=${apiKey}`;
 
-      const chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: result.labels,
-          datasets: [
-            // Indigo line
-            {
-              data: dataset1,
-              fill: true,
-              backgroundColor: function(context) {
-                const chart = context.chart;
-                const {ctx, chartArea} = chart;
-                return chartAreaGradient(ctx, chartArea, [
-                  { stop: 0, color: `rgba(${hexToRGB(tailwindConfig().theme.colors.violet[500])}, 0)` },
-                  { stop: 1, color: `rgba(${hexToRGB(tailwindConfig().theme.colors.violet[500])}, 0.2)` }
-                ]);
-              },
-              borderColor: tailwindConfig().theme.colors.violet[500],
-              borderWidth: 2,
-              pointRadius: 0,
-              pointHoverRadius: 3,
-              pointBackgroundColor: tailwindConfig().theme.colors.violet[500],
-              pointHoverBackgroundColor: tailwindConfig().theme.colors.violet[500],
-              pointBorderWidth: 0,
-              pointHoverBorderWidth: 0,
-              clip: 20,
-              tension: 0.2
-            },
-            // Gray line
-            {
-              data: dataset2,
-              borderColor: `rgba(${hexToRGB(tailwindConfig().theme.colors.gray[500])}, 0.25)`,
-              borderWidth: 2,
-              pointRadius: 0,
-              pointHoverRadius: 3,
-              pointBackgroundColor: `rgba(${hexToRGB(tailwindConfig().theme.colors.gray[500])}, 0.25)`,
-              pointHoverBackgroundColor: `rgba(${hexToRGB(tailwindConfig().theme.colors.gray[500])}, 0.25)`,
-              pointBorderWidth: 0,
-              pointHoverBorderWidth: 0,
-              clip: 20,
-              tension: 0.2
-            },
-          ],
-        },
-        options: {
-          layout: {
-            padding: 20,
-          },
-          scales: {
-            y: {
-              display: false,
-              beginAtZero: true,
-            },
-            x: {
-              type: 'time',
-              time: {
-                parser: 'MM-DD-YYYY',
-                unit: 'month',
-              },
-              display: false,
-            },
-          },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                title: () => false, // Disable tooltip title
-                label: (context) => formatValue(context.parsed.y),
-              },
-              bodyColor: darkMode ? tooltipBodyColor.dark : tooltipBodyColor.light,
-              backgroundColor: darkMode ? tooltipBgColor.dark : tooltipBgColor.light,
-              borderColor: darkMode ? tooltipBorderColor.dark : tooltipBorderColor.light,    
-            },
-            legend: {
-              display: false,
-            },
-          },
-          interaction: {
-            intersect: false,
-            mode: 'nearest',
-          },
-          maintainAspectRatio: false,
-        },
-      });
-      
-      document.addEventListener('darkMode', (e) => {
-        const { mode } = e.detail;
-        if (mode === 'on') {
-          chart.options.plugins.tooltip.bodyColor = tooltipBodyColor.dark;
-          chart.options.plugins.tooltip.backgroundColor = tooltipBgColor.dark;
-          chart.options.plugins.tooltip.borderColor = tooltipBorderColor.dark;
-        } else {
-          chart.options.plugins.tooltip.bodyColor = tooltipBodyColor.light;
-          chart.options.plugins.tooltip.backgroundColor = tooltipBgColor.light;
-          chart.options.plugins.tooltip.borderColor = tooltipBorderColor.light;
-        }
-        chart.update('none');
-      });      
-    });
+    fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+            // Filter data for today's date
+            const today = new Date().toISOString().split("T")[0];
+            const todayData = data.list.filter((item) =>
+                item.dt_txt.startsWith(today)
+            );
+
+            // Calculate average temperature for today and round to nearest integer
+            const averageTemperature = Math.round(
+                todayData.reduce((sum, item) => sum + item.main.temp, 0) /
+                    todayData.length
+            );
+
+            // Update the DOM element with the calculated average temperature
+            avgTempElement.textContent = `${averageTemperature}°C`;
+
+            const chart = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: ["Rata-rata Suhu Hari Ini (°C)"],
+                    datasets: [
+                        {
+                            label: "Suhu",
+                            data: [averageTemperature],
+                            backgroundColor: `rgba(${hexToRGB(
+                                "#4F46E5"
+                            )}, 0.8)`,
+                            borderColor: `rgba(${hexToRGB("#4F46E5")}, 1)`,
+                            borderWidth: 1,
+                        },
+                    ],
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                title: () => "Rata-rata Suhu Hari Ini",
+                                label: (context) => `${context.parsed.y} °C`,
+                                labelTextColor: () => "#FFFFFF", // Mengatur warna label menjadi putih
+                            },
+                            bodyColor: darkMode
+                                ? tooltipBodyColor.dark
+                                : tooltipBodyColor.light,
+                            backgroundColor: "rgba(255, 255, 255, 0)", // Background transparan
+                            borderColor: darkMode
+                                ? tooltipBorderColor.dark
+                                : tooltipBorderColor.light,
+                        },
+                        legend: {
+                            display: false,
+                        },
+                    },
+                    maintainAspectRatio: false,
+                },
+            });
+
+            document.addEventListener("darkMode", (e) => {
+                const { mode } = e.detail;
+                if (mode === "on") {
+                    chart.options.plugins.tooltip.bodyColor =
+                        tooltipBodyColor.dark;
+                    chart.options.plugins.tooltip.backgroundColor =
+                        tooltipBgColor.dark;
+                    chart.options.plugins.tooltip.borderColor =
+                        tooltipBorderColor.dark;
+                } else {
+                    chart.options.plugins.tooltip.bodyColor =
+                        tooltipBodyColor.light;
+                    chart.options.plugins.tooltip.backgroundColor =
+                        tooltipBgColor.light;
+                    chart.options.plugins.tooltip.borderColor =
+                        tooltipBorderColor.light;
+                }
+                chart.update("none");
+            });
+        });
 };
 
 export default dashboardCard02;

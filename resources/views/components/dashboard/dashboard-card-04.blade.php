@@ -23,7 +23,7 @@
                     x-transition:leave-start="opacity-100"
                     x-transition:leave-end="opacity-0"
                     x-cloak>
-                    <div class="text-xs text-center whitespace-nowrap">Built with <a class="underline" @focus="open = true" @focusout="open = false" href="https://www.chartjs.org/" target="_blank">Chart.js</a></div>
+                    <div class="text-xs text-center whitespace-nowrap">Realtime <a class="underline" @focus="open = true" @focusout="open = false" href="https://openweathermap.org/city/1632972" target="_blank">OpenWeather</a></div>
                 </div>
             </div>
         </div>
