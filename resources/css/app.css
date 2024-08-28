@@ -7,6 +7,21 @@
 
 @import "tailwindcss/utilities";
 
+/* CSS untuk mode gelap buttons datatable */
+.dark .buttons-html5 {
+    background-color: #1e40af; /* Warna biru untuk tombol */
+    color: white;
+}
+
+.dark .buttons-html5:hover {
+    background-color: #1e3a8a; /* Warna biru lebih gelap untuk hover */
+    color: white;
+}
+
+.dark .buttons-html5:focus {
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5); /* Highlight untuk fokus */
+}
+
 /* Custom styles */
 .bg-gradient-blue {
     background: rgb(0, 177, 255);
@@ -118,7 +133,7 @@
 }
 
 .btn-sm {
-    padding: 0.50rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     font-size: 0.875rem;
 }
 
@@ -136,5 +151,3 @@
 img {
     object-fit: contain; /* Atau 'cover' jika ingin gambar menutupi area tanpa memotong */
 }
-
-

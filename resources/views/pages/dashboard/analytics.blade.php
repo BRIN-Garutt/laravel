@@ -77,8 +77,8 @@
                 <tfoot class="bg-white">
                     <tr>
                         <td colspan="4" class="py-2 px-4 border-b text-right font-semibold dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Rata-rata per Hari</td>
-                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $averageSuhu }} °C</td>
-                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $averageKelembapan }} %</td>
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ round($averageSuhu) }} °C</td> <!-- round digunakan untuk membulatkan rata-rata -->
+                        <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ round($averageKelembapan) }} %</td>
                     </tr>
                 </tfoot>
             </table>
@@ -186,8 +186,9 @@
 
                         // Update table data
                         var table = $('#c4ytable').DataTable();
-                        table.clear();
+                        table.clear(); // Menghapus data yang ada di tabel
 
+                        // Menambahkan data baru ke tabel
                         data.labels.forEach((label, index) => {
                             table.row.add([
                                 index + 1,
@@ -196,16 +197,17 @@
                                 label,
                                 data.suhuData[index] + ' °C',
                                 data.kelembapanData[index] + ' %'
-                            ]).draw(false);
+                            ]).draw(false); // false untuk menambahkan data ke akhir tabel
                         });
 
                         // Update footer for average per day
                         var tfoot = table.table().footer();
+                        // Math.round() digunakan untuk membulatkan nilai rata-rata
                         $(tfoot).html(`
                             <tr class="bg-white">
                                 <td colspan="4" class="py-2 px-4 border-b text-right font-semibold dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Rata-rata per Hari</td>
-                                <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">${data.averageSuhu} °C</td>
-                                <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">${data.averageKelembapan} %</td>
+                                <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">${Math.round(data.averageSuhu)} °C</td>
+                                <td class="py-2 px-4 border-b dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">${Math.round(data.averageKelembapan)} %</td>
                             </tr>
                         `);
                     });
@@ -220,7 +222,7 @@
                     buttons: [
                         'copy', 'csv', 'excel', 'pdf', 'print'
                     ],
-                    pageLength: 10
+                    pageLength: 10 //menampilkan 10 data per halaman
                 });
             });
         </script>
