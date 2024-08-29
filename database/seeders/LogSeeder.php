@@ -18,7 +18,7 @@ class LogSeeder extends Seeder
         $faker = Faker::create();
 
         // Loop untuk memasukkan 11 data acak
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $now = Carbon::now('Asia/Jakarta');
 
             Log::create([

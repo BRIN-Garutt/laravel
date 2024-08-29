@@ -34,6 +34,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard/analytics', [DashboardController::class, 'analytics'])->name('analytics');
     Route::get('/realtime-data', [DashboardController::class, 'getRealtimeData']);
     Route::get('/filter-analytics', [DashboardController::class, 'filterAnalytics'])->name('filterAnalytics');
+    Route::get('/api/weather-data', [DashboardController::class, 'getWeatherData']);
     Route::post('/sensordata', [SensorController::class, 'store']);
 
     Route::get('/dashboard/fintech', [DashboardController::class, 'fintech'])->name('fintech');
