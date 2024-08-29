@@ -133,7 +133,34 @@
                     responsive: true,
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                // Set font color to white in dark mode
+                                color: function(context) {
+                                    const mode = document.documentElement.classList.contains('dark');
+                                    return mode ? 'white' : 'black';
+                                }
+                            }
+                        },
+                        x: { // Add options for x-axis labels
+                            ticks: {
+                                // Set font color to white in dark mode
+                                color: function(context) {
+                                    const mode = document.documentElement.classList.contains('dark');
+                                    return mode ? 'white' : 'black';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                // Set font color to white in dark mode
+                                color: function(context) {
+                                    const mode = document.documentElement.classList.contains('dark');
+                                    return mode ? 'white' : 'black';
+                                }
+                            }
                         }
                     }
                 }
@@ -156,7 +183,31 @@
                     responsive: true,
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                color: function(context) {
+                                    const mode = document.documentElement.classList.contains('dark');
+                                    return mode ? 'white' : 'black';
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: function(context) {
+                                    const mode = document.documentElement.classList.contains('dark');
+                                    return mode ? 'white' : 'black';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: function(context) {
+                                    const mode = document.documentElement.classList.contains('dark');
+                                    return mode ? 'white' : 'black';
+                                }
+                            }
                         }
                     }
                 }

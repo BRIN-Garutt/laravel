@@ -47,6 +47,22 @@ class DashboardController extends Controller
         return view('pages.dashboard.analytics', compact('logs', 'tanggal', 'hari', 'labels', 'suhuData', 'kelembapanData', 'averageSuhu', 'averageKelembapan'));
     }
 
+    //Untuk data notifikasi
+    public function getWeatherData()
+    {
+        $data = cache()->get('latest_weather_data');
+
+        if ($data) {
+            return response()->json([
+                'suhu' => $data->suhu,
+                'kelembapan' => $data->kelembapan,
+                'timestamp' => Carbon::parse($data->created_at)->format('M d, Y H:i')
+            ]);
+        }
+
+        return response()->json(['message' => 'No data available'], 404);
+    }
+
     public function getRealtimeData(Request $request)
     {
         // Ambil nilai filter dari request
