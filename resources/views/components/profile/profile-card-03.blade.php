@@ -1,7 +1,7 @@
 <div class="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 bg-white dark:bg-gray-800 shadow-sm rounded-xl">
     <div class="px-5 pt-5">
         <header class="flex justify-between items-start mb-2">
-            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Ilham Munawar</h2>
+            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Muhammad Taufan Al-Hafizh Ajie</h2>
             <!-- Menu button -->
             <div class="relative inline-flex" x-data="{ open: false }">
                 <button
@@ -43,22 +43,22 @@
                 </div>
             </div>
         </header>
-        <div class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-1">Informatics Engineering</div>
+        <div class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-1">Electronic Engineering</div>
         
         <!-- Photo and Address Section -->
-        <div class="p-5 flex flex-col items-center">
-            <img class="object-cover object-center rounded-full" width="200" height="100" src="{{ asset('images/profil-ilham.jpeg') }}" alt="Profile image" />
+        <div class="p-3 flex flex-col items-center">
+            <img class="object-cover object-center rounded-full" width="200" height="100" src="{{ asset('images/profil-opang.jpg') }}" alt="Profile image" />
             <!-- Address Section -->
             <div class="mt-6 text-sm text-gray-600 dark:text-gray-300">
                 <!-- Skills -->
                 <div class="flex items-center mb-1">
                     <img src="{{ asset('images/skill-logo.png') }}" alt="Address Icon" class="w-5 h-6 mr-3" />
-                    <span>Skill : Web Designer / Android Designer</span>
+                    <span>Skill : IOT / Controller / Arduino IDE</span>
                 </div>
                 <!-- Address -->
                 <div class="flex items-center mb-1">
                     <img src="{{ asset('images/address-logo.png') }}" alt="Address Icon" class="w-5 h-6 mr-3" />
-                    <span>Address : Pameungpeuk, Garut, Jawa Barat</span>
+                    <span>Address : Garut, Jawa Barat</span>
                 </div>
                 <!-- Phone -->
                 <div class="flex items-center">
@@ -68,17 +68,17 @@
                 <!-- Facebook -->
                 <div class="flex items-center">
                     <img src="{{ asset('images/Facebook-logo.png') }}" alt="Phone Icon" class="w-5 h-6 mr-3" />
-                    <span>Facebook : Ilham</span>
+                    <span>Facebook : Opang</span>
                 </div>
                 <!-- Instagram -->
                 <div class="flex items-center">
                     <img src="{{ asset('images/instagram-logo.png') }}" alt="Phone Icon" class="w-5 h-6 mr-3" />
-                    <span>Instagram : Ilham</span>
+                    <span>Instagram : sleepby_07</span>
                 </div>
                 <!-- Linkedin -->
                 <div class="flex items-center">
                     <img src="{{ asset('images/linkedin-logo.png') }}" alt="Phone Icon" class="w-5 h-6 mr-3" />
-                    <span>LinkedIn : Ilham</span>
+                    <span>LinkedIn : M.Taufan A.A</span>
                 </div>
             </div>
         </div>

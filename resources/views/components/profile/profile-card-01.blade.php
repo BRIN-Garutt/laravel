@@ -44,21 +44,32 @@
             </div>
         </header>
         <div class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-1">Informatics Engineering</div>
-        
+
         <!-- Photo and Address Section -->
-        <div class="p-5 flex flex-col items-center">
+        <div class="p-3 flex flex-col items-center">
             <img class="object-cover object-center rounded-full" width="200" height="100" src="{{ asset('images/profil-ilham.jpeg') }}" alt="Profile image" />
             <!-- Address Section -->
             <div class="mt-6 text-sm text-gray-600 dark:text-gray-300">
+                <!-- Study -->
+                <div class="flex items">
+                    <img src="{{ asset('images/pendidikan-logo.png') }}" alt="Address Icon" class="w-5 h-6 mr-3" />
+                    <div>
+                        <p>Institution:</p>
+                        <p><strong>Politeknik Negeri Cilacap</strong></p>
+                    </div>
+                </div>
                 <!-- Skills -->
                 <div class="flex items-center mb-1">
                     <img src="{{ asset('images/skill-logo.png') }}" alt="Address Icon" class="w-5 h-6 mr-3" />
-                    <span>Skill : Web Designer / Android Designer</span>
+                    <div>
+                        <p>Skill :</p>
+                        <p><strong>Web Developer / Android Developer</strong></p>
+                    </div>
                 </div>
                 <!-- Address -->
                 <div class="flex items-center mb-1">
                     <img src="{{ asset('images/address-logo.png') }}" alt="Address Icon" class="w-5 h-6 mr-3" />
-                    <span>Address : Pameungpeuk, Garut, Jawa Barat</span>
+                    <span>Address : Garut, Jawa Barat</span>
                 </div>
                 <!-- Phone -->
                 <div class="flex items-center">
