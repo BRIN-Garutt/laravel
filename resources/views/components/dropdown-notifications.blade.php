@@ -1,24 +1,7 @@
 @props([
 'align' => 'right'
 ])
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function fetchWeatherData() {
-            fetch('/api/weather-data')
-                .then(response => response.json())
-                .then(data => {
-                    const suhuElement = document.getElementById('suhu-notification');
-                    const kelembapanElement = document.getElementById('kelembapan-notification');
 
-                    suhuElement.innerHTML = `📣 <span class="font-medium text-gray-800 dark:text-gray-100">Suhu Saat ini</span> <br><span>${data.suhu} °C.</span><span class="block text-xs font-medium text-gray-400 dark:text-gray-500">${data.timestamp}</span>`;
-                    kelembapanElement.innerHTML = `📣 <span class="font-medium text-gray-800 dark:text-gray-100">Kelembapan Saat ini</span> <br><span>${data.kelembapan} %.</span><span class="block text-xs font-medium text-gray-400 dark:text-gray-500">${data.timestamp}</span>`;
-                });
-        }
-
-        fetchWeatherData();
-        setInterval(fetchWeatherData, 1000); // Fetch data every 1 hour
-    });
-</script>
 <div class="relative inline-flex" x-data="{ open: false }">
     <button
         class="w-8 h-8 flex items-center justify-center hover:bg-gray-100 lg:hover:bg-gray-200 dark:hover:bg-gray-700/50 dark:lg:hover:bg-gray-800 rounded-full"
@@ -60,3 +43,24 @@
         </ul>
     </div>
 </div>
+
+<script>
+    // Update the notification
+    document.addEventListener('DOMContentLoaded', function() {
+        function fetchWeatherData() {
+            fetch('/api/weather-data')
+                .then(response => response.json())
+                .then(data => {
+                    const suhuElement = document.getElementById('suhu-notification');
+                    const kelembapanElement = document.getElementById('kelembapan-notification');
+
+                    // untuk menampilkan data yang diambil dari database
+                    suhuElement.innerHTML = `📣 <span class="font-medium text-gray-800 dark:text-gray-100">Suhu Saat ini</span> <br><span>${data.suhu} °C.</span><span class="block text-xs font-medium text-gray-400 dark:text-gray-500">${data.timestamp}</span>`;
+                    kelembapanElement.innerHTML = `📣 <span class="font-medium text-gray-800 dark:text-gray-100">Kelembapan Saat ini</span> <br><span>${data.kelembapan} %.</span><span class="block text-xs font-medium text-gray-400 dark:text-gray-500">${data.timestamp}</span>`;
+                });
+        }
+
+        fetchWeatherData();
+        setInterval(fetchWeatherData, 2000); // Fetch data every 1 hour
+    });
+</script>

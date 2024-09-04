@@ -50,13 +50,13 @@ class DashboardController extends Controller
     //Untuk data notifikasi
     public function getWeatherData()
     {
-        $data = cache()->get('latest_weather_data');
+        $latestLog = DB::table('logs')->latest('created_at')->first();
 
-        if ($data) {
+        if ($latestLog) {
             return response()->json([
-                'suhu' => $data->suhu,
-                'kelembapan' => $data->kelembapan,
-                'timestamp' => Carbon::parse($data->created_at)->format('M d, Y H:i')
+                'suhu' => $latestLog->suhu,
+                'kelembapan' => $latestLog->kelembapan,
+                'timestamp' => \Carbon\Carbon::parse($latestLog->created_at)->format('M d, Y H:i')
             ]);
         }
 
