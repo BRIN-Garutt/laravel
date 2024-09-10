@@ -1,6 +1,15 @@
 <x-app-layout>
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
+        <!-- Tampilkan alert jika login sukses -->
+        @if (session('login_success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                alert('{{ session("login_success") }}');
+            });
+        </script>
+        @endif
+
         <!-- Dashboard actions -->
         <div class="sm:flex sm:justify-between sm:items-center mb-8">
 

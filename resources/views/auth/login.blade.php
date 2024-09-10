@@ -5,6 +5,16 @@
         {{ session('status') }}
     </div>
     @endif
+
+    <!-- Tampilkan alert jika logout sukses -->
+    @if (session('logout_success'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            alert('{{ session("logout_success") }}');
+        });
+    </script>
+    @endif
+
     <!-- Form -->
     <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -31,6 +41,7 @@
             </x-button>
         </div>
     </form>
+    <!-- terhubung ke file validation-errors.blade.php -->
     <x-validation-errors class="mt-4" />
     <!-- Footer -->
     <div class="pt-5 mt-6 border-t border-gray-100 dark:border-gray-700/60">

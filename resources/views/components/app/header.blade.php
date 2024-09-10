@@ -38,6 +38,7 @@
                 <hr class="w-px h-6 bg-gray-200 dark:bg-gray-700/60 border-none" />
 
                 <!-- User button -->
+                <!-- Terhubung ke dropdown-profile.blade.php -->
                 <x-dropdown-profile align="right" />
 
             </div>
